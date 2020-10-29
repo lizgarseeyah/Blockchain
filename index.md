@@ -371,42 +371,7 @@ Add to network if not already present
 
 The Block Explorer web app relies on several more endpoints to retrieve the data:
 
-`// get block by blockHash
-Returns block associated with block hash
-app.get('/block/:blockHash', function(req, res) {
-	const blockHash = req.params.blockHash;
-	const correctBlock = bitcoin.getBlock(blockHash);
-	res.json({
-		block: correctBlock
-	});
-	
-});
-
-// get transaction by transactionId
-app.get('/transaction/:transactionId', function(req, res) {
-	const transactionId = req.params.transactionId;
-	const trasactionData = bitcoin.getTransaction(transactionId);
-	res.json({
-		transaction: trasactionData.transaction,
-		block: trasactionData.block
-	});
-	
-});
-
-// get address by address
-Returns all transactions associated with the block (sending, receiving bitcoin)
-app.get('/address/:address', function(req, res) {
-	const address = req.params.address;
-	const addressData = bitcoin.getAddressData(address);
-	res.json({
-		addressData: addressData
-	});
-});
-
-// block explorer
-app.get('/block-explorer', function(req, res) {
-	res.sendFile('./block-explorer/index.html', { root: dirname });
-});`
+![code](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/code.jpeg)
 
 **Testing Block Explorer:**
 
