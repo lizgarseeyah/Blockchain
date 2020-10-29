@@ -371,7 +371,7 @@ Add to network if not already present
 
 The Block Explorer web app relies on several more endpoints to retrieve the data:
 
-![code](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/code.jpeg)
+![code](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/code.png)
 
 **Testing Block Explorer:**
 
@@ -386,7 +386,7 @@ Start the server by running the following in terminal:
 
 Go to a chrome browser and navigate to: http://localhost:3001/block-explorer 
 
-![block-explorer](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/block-explorer.jpeg)
+![block-explorer](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/block-explorer.png)
 
 The next step is to register and connect all nodes using the `register-and-broadcast-node` API since none of the nodes are currently connected in the network.
 
