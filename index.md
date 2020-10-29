@@ -200,7 +200,7 @@ Where 'req' is request, and 'res' is response.
 
 As the decentralized network gets built, more APIs are added to handle the different blockchain functionalities. The networkNode.js file has a total of 13 defined API endpoints and can be viewed here. 
 
-### Installing Express JS and Postman
+**Installing Express JS and Postman**
 
 First, the Express JS library is used to create the server that communicates with the APIs. To setup Express JS, I ran the following commands in terminal to install dependencies:
 
@@ -242,33 +242,38 @@ If everything works out, navigating to localhost:3000/blockchain will yield the 
 
 Installing a JSON formatter will make the output more readable:
 
-## Building the API Foundation:
+### Building the API Foundation:
 
-First API endpoint: retrieve entire Blockchain
-const bitcoin = new Blockchain(); //references blockchain.js file
+**First API endpoint: retrieve entire Blockchain**
+
+```markdown
+`const bitcoin = new Blockchain(); //references blockchain.js file
 
 // get entire blockchain
 
 
 app.get('/blockchain', function (req, res) {
     res.send(bitcoin);
-});
+});`
+```
 Simply returns the entire blockchain.
 
-Second API endpoint: Creating a new transaction
+**Second API endpoint: Creating a new transaction**
+
 This API uses the createNewTransactions function to add a new transaction to the block.This endpoint expects three values: amount, sender, and recipient as input, because that is what the function calls for. A block number that the new transaction is added to is returned.
-app.post('/transaction', function (req, res) {
 
+```markdown
+`app.post('/transaction', function (req, res) {
+	bitcoin.createNewTransaction(req.body.amount, req.body.sender, req.recipient);
+});`
+```
 
-    bitcoin.createNewTransaction(req.body.amount, req.body.sender, req.recipient);
+**Third API endpoint: Mine and create a new block**
 
-
-});
-
-Third API endpoint: Mine and create a new block
 This API uses the createNewBlock method. The createNewBlock method takes in three parameters by which additional calculations are needed to get these values. These parameters are: nonce, previousBlockHash, and hash. These values must be defined and included in our API endpoint.
 
-app.get('/mine', function(req, res) {
+```markdown
+`app.get('/mine', function(req, res) {
 
 	const lastBlock = bitcoin.getLastBlock();
 	const previousBlockHash = lastBlock['hash'];
@@ -288,150 +293,75 @@ app.get('/mine', function(req, res) {
 			method: 'POST',
 			body: { newBlock: newBlock },
 			json: true
-		};
-
-
-		requestPromises.push(rp(requestOptions));
-	});
-
+		};```
+		
+At this point, we have one single blockchain controlled by our APIs => centralized network. This section focuses on building out a decentralized network. Having a decentralized network improves security of the blockchain. We’re going to make many instances of the API which represents a network node that works together to host our blockchain so no one ba d player can cheat the system and we can verify with the other nodes.
 
 
 
+**Creating Multiple Nodes:**
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-We’re mining a new block using Proof of Work. We’re able to accomplish all these calculations using our own data structures defined in Part I. 
-
-Part III: Creating a Decentralized Blockchain
-At this point, we have one single blockchain controlled by our APIs => centralized network. This section focuses on building out a decentralized network. Having a decentralized network improves security of the blockchain. We’re going to make many instances of the API which represents a network node that works together to host our blockchain so no one bad player can cheat the system and we can verify with the other nodes.
-
-
-
-Creating Multiple Nodes:
 Instead of relying on one API node, we are going to create a collection of API nodes. To accomplish this, we have to make our port a variable instead of hard coded so that it runs on multiple ports (3001, 3002, etc.). 
 In the networkNode.json API file, we defined the port as a variable:
 
-const port = process.argv[3];
+`const port = process.argv[3];`
 
-This refers to the nodemon command in the package.json file where the first two elements in argv array are nodemon server commands and the 3rd element is the port number.
+This refers to the nodemon command in the package.json file where the first two elements in argv array are nodemon server commands and the 3rd element is the port number:
 
-
-
-
-
-
-
- "scripts": {
-
-
-
+```markdown
+ `"scripts": {
 
    "test": "echo \"Error: no test specified\" && exit 1",
-
-
    "node_1": "nodemon --watch dev -e js dev/networkNode.js 3001 http://localhost:3001",
-
-
    "node_2": "nodemon --watch dev -e js dev/networkNode.js 3002 http://localhost:3002",
-
-
    "node_3": "nodemon --watch dev -e js dev/networkNode.js 3003 http://localhost:3003",
-
-
    "node_4": "nodemon --watch dev -e js dev/networkNode.js 3004 http://localhost:3004",
-
-
-   "node_5": "nodemon --watch dev -e js dev/networkNode.js 3005 http://localhost:3005"
-
-
-
-
-
-
+   "node_5": "nodemon --watch dev -e js dev/networkNode.js 3005 http://localhost:3005"`
+   ```markdown
 
 Removing hard coding:
 
 In terminal run: 
-npm run node_1
-To run multiple nodes:
-npm run node_2
-npm run node_3
-npm run node_4
-npm run node_5
+`npm run node_1`
 
-Additional APIs:
-Register-and-broadcast-node: Register node and broadcast it to the network.
-Register-node: register a node with the network
+To run multiple nodes:
+
+`npm run node_2`
+`npm run node_3`
+`npm run node_4`
+`npm run node_5`
+
+### Additional APIs:
+
+**Register-and-broadcast-node:** Register node and broadcast it to the network.
+**Register-node:** register a node with the network
 
 To add 3009 to the network, hit the /register-and-broadcast-node endpoint on any node. The new node URL ,localhost:3009, is passed in as data. So it registers the data on it’s own node, then broadcasts it to other nodes.
 
 The data is passed along to the other nodes by calling the  /register-node endpoints at each node.
 Then the original node calls the /register-nodes-bulk endpoint back to the new node and sends the network node data. So now the new node is part of the network.
 
-
-
-
-// register a node and broadcast it the network
-
-
-
-
+`// register a node and broadcast it the network
 app.post('/register-and-broadcast-node', function(req, res) {
 
 
 	const newNodeUrl = req.body.newNodeUrl;
 If not already present then add it
 	if (bitcoin.networkNodes.indexOf(newNodeUrl) == -1) bitcoin.networkNodes.push(newNodeUrl);
-
-
-
-
-
-
-
 	const regNodesPromises = [];
 To broadcast
 	bitcoin.networkNodes.forEach(networkNodeUrl => {
 Everytime we register a node, we need to define it’s options to use for each request.
 		const requestOptions = {
-
-
 			uri: networkNodeUrl + '/register-node',
-
-
 			method: 'POST',
-
-
 			body: { newNodeUrl: newNodeUrl },
-
-
 			json: true
-
-
-		};
-
-
-
-
+		};`
 
 To use these options. We get back an array of promises. These requests just register new node with network. These requests are asynchronous; we don’t know how long it’s going to calculate this data because it is reaching an outside source which are the other nodes in the network. Since it’s asynch we’ll just place it in an array. regNodesPromises.
-		regNodesPromises.push(rp(requestOptions));
 
+		regNodesPromises.push(rp(requestOptions));
 
 	});
 To allow the node to make a request to all the other nodes, we install the request-promise library
@@ -465,97 +395,38 @@ Add to network if not already present
 The Block Explorer web app relies on several more endpoints to retrieve the data:
 
 // get block by blockHash
-
-
 Returns block associated with block hash
 app.get('/block/:blockHash', function(req, res) {
-
-
 	const blockHash = req.params.blockHash;
-
-
 	const correctBlock = bitcoin.getBlock(blockHash);
-
-
 	res.json({
-
-
 		block: correctBlock
-
-
 	});
-
-
 });
-
 // get transaction by transactionId
-
-
-
-
 app.get('/transaction/:transactionId', function(req, res) {
-
-
 	const transactionId = req.params.transactionId;
-
-
 	const trasactionData = bitcoin.getTransaction(transactionId);
-
-
 	res.json({
-
-
 		transaction: trasactionData.transaction,
-
-
 		block: trasactionData.block
-
-
 	});
-
-
 });
-
-
 // get address by address
-
-
 Returns all transactions associated with the block (sending, receiving bitcoin)
 app.get('/address/:address', function(req, res) {
-
-
 	const address = req.params.address;
-
-
 	const addressData = bitcoin.getAddressData(address);
-
-
 	res.json({
-
-
 		addressData: addressData
-
-
 	});
-
-
 });
-
-
 // block explorer
-
-
-
-
 app.get('/block-explorer', function(req, res) {
-
-
-	res.sendFile('./block-explorer/index.html', { root: __dirname });
-
-
+	res.sendFile('./block-explorer/index.html', { root: dirname });
 });
 
-### Testing Block Explorer:
+ Testing Block Explorer:
 
 In terminal, navigate to the folder containing the project.
 Start the server by running the following in terminal:
@@ -568,24 +439,27 @@ Go to a chrome browser and navigate to: http://localhost:3001/block-explorer
 
 
 The next step is to register and connect all nodes using the `register-and-broadcast-node` API since none of the nodes are currently connected in the network.
+
 Go to Postman and enter the following information:
-Method=> POST: http://localhost:3001/register-node   
-JSON object: { “newNodeUrl” : “http://localhost:3001” }
-Click on “Send”
-Repeat replacing 3001 with 3002, 3003, 3004, 3005 in the JSON object code.
+
+- Method=> POST: http://localhost:3001/register-node 
+
+- JSON object: { “newNodeUrl” : “http://localhost:3001” }
+- Click on “Send”
+- Repeat replacing 3001 with 3002, 3003, 3004, 3005 in the JSON object code.
 
 Now the nodes are registered:
 
 Before adding data, the next step is to mine (or create) a few blocks. Navigate to localhost:3005/mine and localhost:3004/mine. The following message should appear indicating successful creation of blocks:
 
-To send the data, enter the following in Postman
-POST http://localhost:3002/transaction/broadcast
-JSON Object:
-{
+To send the data, enter the following in Postman:
+- POST http://localhost:3002/transaction/broadcast
+- JSON Object:
+`{
    "amount": 4300,
    "sender": "JKFADJREPQ8489",
    "recipient": "KJFDAJE9PAE8"
-}
+}`
 
 Repeat the previous step a few more times, changing the JSON Object and sending the data to the blockchain.
 
@@ -596,20 +470,6 @@ Now that we have a blockchain, we use the information above to query the block i
 Block Explorer file can be located here:
 
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
 
 [Link](url) and ![Image](src)
-```
+
