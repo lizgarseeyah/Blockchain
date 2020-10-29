@@ -33,7 +33,7 @@ This project walks through the steps required to create a simple, immutable, dec
 
 The data structure of the Blockchain is created from a series of Javascript constructors. The first step is to create an empty blockchain which is simply an array that stores our values:
 
-```markdown
+
 `function Blockchain() {
    this.chain = [];
    this.pendingTransactions = [];
@@ -72,42 +72,28 @@ The createNewBlock function creates, in other words ‘mines’, a new block by 
 
 To test the above functions in the blockchain.js file, we need to export this module to be used in the newly created test.js program. The following line of code enables us to use the Blockchain function in other programs:
 
-```markdown
-module.exports = Blockchain; //export blockchain.js
-const Blockchain = require('./blockchain'); //added to test.js
+`module.exports = Blockchain; //export blockchain.js
+const Blockchain = require('./blockchain'); //added to test.js`
 
-### Testing the Blockchain Function:
+**Testing the Blockchain Function:**
 
 This test simply demonstrates we have working function that can create a blockchain structure:
-```markdown
+`
 const Blockchain = require('./blockchain');
 const bitcoin = new Blockchain();
 // prints blockchain
 console.log(bitcoin);
-```
+`
 In terminal, run the file:
 
 `node dev/test.js`
 
 Output: 
-```markdown
-Blockchain { 
+
+`Blockchain { 
     chain [ ], 
     newTransactions: [ ] 
- } 
-```
-
-### Testing the createNewBlock Method:
-
-Inserting the line below in the test.js file, tests if the code can create a new block:
-bitcoin.createNewBlock(2389, 'JJDHDY8837F6H3K', 'JDFKA42JR8349');
-
-Run terminal: 
-
-`node dev/test.js`
-
-Output:
-
+ } `
 
 ### getLastBlock Function
 
@@ -137,19 +123,6 @@ Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) 
 ### How the transaction function works:
 
 The function will receive user input for amount, sender information, and recipient information. Assume multiple transactions will take place. Each time a new transaction is created it gets pushed into the ‘newTransactions’ array. However, the transactions in the ‘newTransactions’ array are not recorded onto the blockchain until the block has been mined (i.e. a new block is created). So transactions in the array are considered pending transactions until the function ‘createNewBlock’ is invoked and the data moves from ‘newTransactions’ array to ‘chain’ array.
-
-
-Testing the create new transaction and block mining methods:
-
-// bitcoin.createNewBlock(3291231, 'FJDKA;J39LA;JF00S', 'OFDJAK0DHFI');
-
-
-// bitcoin.createNewTransaction(100, 'ALEXAJ3902KSLDD', 'JEN39DSDF3JKDSD');
-
-// prints blockchain
-
-console.log(bitcoin)
-Output:
 
 ### hashBlock Function
 
@@ -293,7 +266,9 @@ This API uses the createNewBlock method. The createNewBlock method takes in thre
 		
 At this point, we have one single blockchain controlled by our APIs => centralized network. This section focuses on building out a decentralized network. Having a decentralized network improves security of the blockchain. We’re going to make many instances of the API which represents a network node that works together to host our blockchain so no one ba d player can cheat the system and we can verify with the other nodes.
 
+## Part III: Creating a Decentralized Blockchain
 
+At this point, we have one single blockchain controlled by our APIs => centralized network. This section focuses on building out a decentralized network. Having a decentralized network improves security of the blockchain. We’re going to make many instances of the API which represents a network node that works together to host our blockchain so no one bad player can cheat the system and we can verify with the other nodes.
 
 **Creating Multiple Nodes:**
 
@@ -328,13 +303,20 @@ To run multiple nodes:
 
 ### Additional APIs:
 
-**Register-and-broadcast-node:** Register node and broadcast it to the network.
-**Register-node:** register a node with the network
+- **Register-and-broadcast-node:** Register node and broadcast it to the network.
+
+- **Register-node:** register a node with the network
+
+![reg-and-broadcast](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/reg-and-broadcast.jpeg)
 
 To add 3009 to the network, hit the /register-and-broadcast-node endpoint on any node. The new node URL ,localhost:3009, is passed in as data. So it registers the data on it’s own node, then broadcasts it to other nodes.
 
+![reg-node](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/reg-node.jpeg)
+
 The data is passed along to the other nodes by calling the  /register-node endpoints at each node.
 Then the original node calls the /register-nodes-bulk endpoint back to the new node and sends the network node data. So now the new node is part of the network.
+
+![reg-node-bulk](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/reg-node-bulk.jpeg)
 
 `// register a node and broadcast it the network
 app.post('/register-and-broadcast-node', function(req, res) {
@@ -439,6 +421,7 @@ Start the server by running the following in terminal:
 
 Go to a chrome browser and navigate to: http://localhost:3001/block-explorer 
 
+![block-explorer](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/block-explorer.jpeg)
 
 The next step is to register and connect all nodes using the `register-and-broadcast-node` API since none of the nodes are currently connected in the network.
 
@@ -449,9 +432,15 @@ Go to Postman and enter the following information:
 - Click on “Send”
 - Repeat replacing 3001 with 3002, 3003, 3004, 3005 in the JSON object code.
 
+![postman](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/postman.jpeg)
+
 Now the nodes are registered:
 
+![rboutput](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/rboutput.jpeg)
+
 Before adding data, the next step is to mine (or create) a few blocks. Navigate to localhost:3005/mine and localhost:3004/mine. The following message should appear indicating successful creation of blocks:
+
+![mine](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/mine.png)
 
 To send the data, enter the following in Postman:
 - POST http://localhost:3002/transaction/broadcast
@@ -468,9 +457,4 @@ Hitting the refresh button on the /mine endpoint will yield the following result
 
 Now that we have a blockchain, we use the information above to query the block information using the Block Explorer:
 
-Block Explorer file can be located here:
-
-
-
-[Link](url) and ![Image](src)
-
+![final](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/final.png)
