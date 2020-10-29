@@ -371,7 +371,7 @@ Add to network if not already present
 
 The Block Explorer web app relies on several more endpoints to retrieve the data:
 
-```markdown// get block by blockHash
+`// get block by blockHash
 Returns block associated with block hash
 app.get('/block/:blockHash', function(req, res) {
 	const blockHash = req.params.blockHash;
@@ -406,7 +406,7 @@ app.get('/address/:address', function(req, res) {
 // block explorer
 app.get('/block-explorer', function(req, res) {
 	res.sendFile('./block-explorer/index.html', { root: dirname });
-});
+});`
 
 **Testing Block Explorer:**
 
