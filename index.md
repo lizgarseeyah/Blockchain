@@ -389,7 +389,7 @@ Add to network if not already present
 
 The Block Explorer web app relies on several more endpoints to retrieve the data:
 
-// get block by blockHash
+```markdown// get block by blockHash
 Returns block associated with block hash
 app.get('/block/:blockHash', function(req, res) {
 	const blockHash = req.params.blockHash;
@@ -397,7 +397,9 @@ app.get('/block/:blockHash', function(req, res) {
 	res.json({
 		block: correctBlock
 	});
+	
 });
+
 // get transaction by transactionId
 app.get('/transaction/:transactionId', function(req, res) {
 	const transactionId = req.params.transactionId;
@@ -406,7 +408,9 @@ app.get('/transaction/:transactionId', function(req, res) {
 		transaction: trasactionData.transaction,
 		block: trasactionData.block
 	});
+	
 });
+
 // get address by address
 Returns all transactions associated with the block (sending, receiving bitcoin)
 app.get('/address/:address', function(req, res) {
@@ -416,15 +420,17 @@ app.get('/address/:address', function(req, res) {
 		addressData: addressData
 	});
 });
+
 // block explorer
 app.get('/block-explorer', function(req, res) {
 	res.sendFile('./block-explorer/index.html', { root: dirname });
 });
 
- Testing Block Explorer:
+**Testing Block Explorer:**
 
 In terminal, navigate to the folder containing the project.
 Start the server by running the following in terminal:
+
 - `npm run node_1`
 - `npm run node_2`
 - `npm run node_3`
@@ -439,7 +445,6 @@ The next step is to register and connect all nodes using the `register-and-broad
 Go to Postman and enter the following information:
 
 - Method=> POST: http://localhost:3001/register-node 
-
 - JSON object: { “newNodeUrl” : “http://localhost:3001” }
 - Click on “Send”
 - Repeat replacing 3001 with 3002, 3003, 3004, 3005 in the JSON object code.
