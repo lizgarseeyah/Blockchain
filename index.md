@@ -271,10 +271,8 @@ This API uses the createNewTransactions function to add a new transaction to the
 **Third API endpoint: Mine and create a new block**
 
 This API uses the createNewBlock method. The createNewBlock method takes in three parameters by which additional calculations are needed to get these values. These parameters are: nonce, previousBlockHash, and hash. These values must be defined and included in our API endpoint.
-
 ```markdown
 `app.get('/mine', function(req, res) {
-
 	const lastBlock = bitcoin.getLastBlock();
 	const previousBlockHash = lastBlock['hash'];
 	const currentBlockData = {
@@ -284,8 +282,6 @@ This API uses the createNewBlock method. The createNewBlock method takes in thre
 	const nonce = bitcoin.proofOfWork(previousBlockHash, currentBlockData);
 	const blockHash = bitcoin.hashBlock(previousBlockHash, currentBlockData, nonce);
 	const newBlock = bitcoin.createNewBlock(nonce, previousBlockHash, blockHash);
-
-
 	const requestPromises = [];
 	bitcoin.networkNodes.forEach(networkNodeUrl => {
 		const requestOptions = {
@@ -293,8 +289,8 @@ This API uses the createNewBlock method. The createNewBlock method takes in thre
 			method: 'POST',
 			body: { newBlock: newBlock },
 			json: true
-		};```
-		
+		};`
+		```
 At this point, we have one single blockchain controlled by our APIs => centralized network. This section focuses on building out a decentralized network. Having a decentralized network improves security of the blockchain. We’re going to make many instances of the API which represents a network node that works together to host our blockchain so no one ba d player can cheat the system and we can verify with the other nodes.
 
 
