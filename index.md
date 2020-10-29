@@ -10,6 +10,8 @@ Full Stack Solutions Architect
 
 [GitHub](https://www.github.com/lizgarseeyah/)
 
+GitHub Page for this project: https://lizgarseeyah.github.io/Blockchain/
+
 This project walks through the steps required to create a simple, immutable, decentralized blockchain using Javascript. The blockchain will be encrypted using the SHA256 algorithm. This program will also enable UI interaction with the blockchain using an HTML/CSS webapp called Block Explorer. Postman API app was used to send commands to the endpoints. This program allows the user to send transactions,  mine blocks, retrieve data, and broadcast nodes.
 
 ### Topics covered:
