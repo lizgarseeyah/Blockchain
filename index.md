@@ -271,7 +271,7 @@ This API uses the createNewTransactions function to add a new transaction to the
 **Third API endpoint: Mine and create a new block**
 
 This API uses the createNewBlock method. The createNewBlock method takes in three parameters by which additional calculations are needed to get these values. These parameters are: nonce, previousBlockHash, and hash. These values must be defined and included in our API endpoint.
-```markdown
+
 `app.get('/mine', function(req, res) {
 	const lastBlock = bitcoin.getLastBlock();
 	const previousBlockHash = lastBlock['hash'];
@@ -290,7 +290,7 @@ This API uses the createNewBlock method. The createNewBlock method takes in thre
 			body: { newBlock: newBlock },
 			json: true
 		};`
-		```
+		
 At this point, we have one single blockchain controlled by our APIs => centralized network. This section focuses on building out a decentralized network. Having a decentralized network improves security of the blockchain. We’re going to make many instances of the API which represents a network node that works together to host our blockchain so no one ba d player can cheat the system and we can verify with the other nodes.
 
 
@@ -303,7 +303,6 @@ In the networkNode.json API file, we defined the port as a variable:
 `const port = process.argv[3];`
 
 This refers to the nodemon command in the package.json file where the first two elements in argv array are nodemon server commands and the 3rd element is the port number:
-
 ```markdown
  `"scripts": {
 
@@ -313,7 +312,7 @@ This refers to the nodemon command in the package.json file where the first two 
    "node_3": "nodemon --watch dev -e js dev/networkNode.js 3003 http://localhost:3003",
    "node_4": "nodemon --watch dev -e js dev/networkNode.js 3004 http://localhost:3004",
    "node_5": "nodemon --watch dev -e js dev/networkNode.js 3005 http://localhost:3005"`
-   ```markdown
+   ```
 
 Removing hard coding:
 
@@ -426,11 +425,12 @@ app.get('/block-explorer', function(req, res) {
 
 In terminal, navigate to the folder containing the project.
 Start the server by running the following in terminal:
-npm run node_1
-npm run node_2
-npm run node_3
-npm run node_4
-npm run node_5
+- `npm run node_1`
+- `npm run node_2`
+- `npm run node_3`
+- `npm run node_4`
+- `npm run node_5`
+
 Go to a chrome browser and navigate to: http://localhost:3001/block-explorer 
 
 
