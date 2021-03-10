@@ -403,7 +403,7 @@ Go to Postman and enter the following information:
 
 Now the nodes are registered:
 
-![rboutput](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/rboutput.jpeg)
+![rboutput](https://github.com/lizgarseeyah/Blockchain/tree/gh-pages/img/rboutput.jpeg)
 
 Before adding data, the next step is to mine (or create) a few blocks. Navigate to localhost:3005/mine and localhost:3004/mine. The following message should appear indicating successful creation of blocks:
 
