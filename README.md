@@ -12,7 +12,7 @@ Full Stack Solutions Architect
 
 GitHub Page for this project: https://lizgarseeyah.github.io/Blockchain/
 
-This project walks through the steps required to create a simple, immutable, decentralized blockchain using Javascript. The blockchain will be encrypted using the SHA256 algorithm. This program will also enable UI interaction with the blockchain using an HTML/CSS webapp called Block Explorer. Postman API app was used to send commands to the endpoints. This program allows the user to send transactions,  mine blocks, retrieve data, and broadcast nodes.
+This project walks through the steps required to create a simple, immutable, decentralized blockchain using JavaScript. The blockchain will be encrypted using the SHA256 algorithm. The UI web app, called Block Explorer, was developed using HTML and CSS. Postman API app was used to send API commands to the endpoints. The Block Explorer program allows the user to send transactions, mine blocks, retrieve block information, and broadcast new nodes to the rest of the blockchain.
 
 ### Topics covered:
 - Part I: Creating the Blockchain Data Structure
@@ -33,7 +33,7 @@ This project walks through the steps required to create a simple, immutable, dec
 
 ### Simple Blockchain Constructor Function:
 
-The data structure of the Blockchain is created from a series of Javascript constructors. The first step is to create an empty blockchain which is simply an array that stores our values:
+The data structure of the Blockchain is created from a series of JavaScript constructors. The first step is to create an empty blockchain which is simply an array that stores our values:
 
 
 `function Blockchain() {
@@ -72,25 +72,25 @@ The createNewBlock function creates, in other words ‘mines’, a new block by 
 - hash: immutable, fixed-length SHA256 proof-of-work hash value.
 - previousBlockHash: previous block’s hash value as part of a method to ensure the blockchain has not been tampered with.
 
-To test the above functions in the blockchain.js file, we need to export this module to be used in the newly created test.js program. The following line of code enables us to use the Blockchain function in other programs:
+To implement the above functions in the blockchain.js file, the line of code below exports the Blockchain function to be used in other programs:
 
 `module.exports = Blockchain; //export blockchain.js
 const Blockchain = require('./blockchain'); //added to test.js`
 
 **Testing the Blockchain Function:**
 
-This test simply demonstrates we have working function that can create a blockchain structure:
+The code below tests whether the function is able to create a blockchain structure:
 `
 const Blockchain = require('./blockchain');
 const bitcoin = new Blockchain();
 // prints blockchain
 console.log(bitcoin);
 `
-In terminal, run the file:
+To run the file, run the command below:
 
 `node dev/test.js`
 
-Output: 
+Expected Output: 
 
 `Blockchain { 
     chain [ ], 
@@ -107,24 +107,25 @@ This function retrieves the last block in the blockchain:
 };`
 ```
 
-At this point, we have a working function that creates an empty blockchain, a second function to create new blocks (the mining function), and a third function that retrieves the last value from our blockchain. 
+At this point, 3 fundamental Blockchain functions have been created using JavaScript: one creates a simple, empty blockchain, a second function creates new blocks (the mining function), and a third function that retrieves the last value from our blockchain. 
 
 ### createNewTransaction Function
 
-Now that we have a basic blockchain structure, the next step is to populate the blockchain with data. The function below accomplishes this by creating ‘transactions’ to be stored in an array:
-Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) {
+Now that a basic blockchain structure has been created, the next step is to populate the blockchain with data. The function below accomplishes this by creating ‘transactions’ to be stored in an array:
 
 ```markdown
-   `const newTransaction = {
-       amount: amount,
-       sender: sender,
-       recipient: recipient,
+   `Blockchain.prototype.createNewTransaction = function(amount, sender, recipient) {
+	   const newTransaction = {
+	       amount: amount,
+	       sender: sender,
+	       recipient: recipient,
+	   }
    };`
    ```
 
 ### How the transaction function works:
 
-The function will receive user input for amount, sender information, and recipient information. Assume multiple transactions will take place. Each time a new transaction is created it gets pushed into the ‘newTransactions’ array. However, the transactions in the ‘newTransactions’ array are not recorded onto the blockchain until the block has been mined (i.e. a new block is created). So transactions in the array are considered pending transactions until the function ‘createNewBlock’ is invoked and the data moves from ‘newTransactions’ array to ‘chain’ array.
+The function will receive user input for amount, sender information, and recipient information. Each time a new transaction is created it gets pushed into the ‘newTransactions’ array. However, the transactions that are in the ‘newTransactions’ array are not recorded onto the blockchain until the block has been mined (i.e. a new block is created). So transactions in the array are considered pending transactions until the function ‘createNewBlock’ is invoked and the data moves from ‘newTransactions’ array to ‘chain’ array.
 
 ### hashBlock Function
 
@@ -159,7 +160,7 @@ Once we find the correctly generated hash, return nonce that gives us a valid ha
 };`
 ```
 
-This ensures our blockchain is secure. In order to recreate a block, the proofOfWork function will need to run hundreds of thousands of times and will require a lot of computing power to create the correct hash. This is how it secures the blockchain. It makes it hard to add more blockchain or modify it without first trying to decrypt the hash value. It also takes in the previous hash value which is another layer of complexity. All are linked together by their data. Re-mining and recreating the blocks is not feasible.
+This ensures our blockchain is secure. In order to recreate a block, the 'proofOfWork function' will need to run hundreds of thousands of times and will require a lot of computing power to create the correct hash. This is how it secures the blockchain. It makes it hard to add more blockchain or modify it without first trying to decrypt the hash value. It also takes in the previous hash value which is another layer of complexity. All are linked together by their data. Re-mining and recreating the blocks is not feasible.
 
 The complete blockchain source code can be accessed here.
 
