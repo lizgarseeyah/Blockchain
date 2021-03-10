@@ -373,7 +373,7 @@ Add to network if not already present
 
 The Block Explorer web app relies on several more endpoints to retrieve the data:
 
-![code](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/code.png)
+![code](/img/code.png)
 
 **Testing Block Explorer:**
 
@@ -388,7 +388,7 @@ Start the server by running the following in terminal:
 
 Go to a chrome browser and navigate to: http://localhost:3001/block-explorer 
 
-![block-explorer](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/block-explorer.png)
+![block-explorer](/img/block-explorer.png)
 
 The next step is to register and connect all nodes using the `register-and-broadcast-node` API since none of the nodes are currently connected in the network.
 
@@ -399,15 +399,15 @@ Go to Postman and enter the following information:
 - Click on “Send”
 - Repeat replacing 3001 with 3002, 3003, 3004, 3005 in the JSON object code.
 
-![postman](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/postman.jpeg)
+![postman](/img/postman.jpeg)
 
 Now the nodes are registered:
 
-![rboutput](https://github.com/lizgarseeyah/Blockchain/tree/gh-pages/img/rboutput.jpeg)
+![rboutput](/img/rboutput.jpeg)
 
 Before adding data, the next step is to mine (or create) a few blocks. Navigate to localhost:3005/mine and localhost:3004/mine. The following message should appear indicating successful creation of blocks:
 
-![mine](https://github.com/lizgarseeyah/Blockchain/tree/gh-pages/img/mine.png)
+![mine](/img/mine.png)
 
 To send the data, enter the following in Postman:
 - POST http://localhost:3002/transaction/broadcast
@@ -424,4 +424,4 @@ Hitting the refresh button on the /mine endpoint will yield the following result
 
 Now that we have a blockchain, we use the information above to query the block information using the Block Explorer:
 
-![final](https://github.com/lizgarseeyah/Blockchain/tree/gh-pages/img/final.png)
+![final](/img/final.png)
