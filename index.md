@@ -407,7 +407,7 @@ Now the nodes are registered:
 
 Before adding data, the next step is to mine (or create) a few blocks. Navigate to localhost:3005/mine and localhost:3004/mine. The following message should appear indicating successful creation of blocks:
 
-![mine](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/mine.png)
+![mine](https://github.com/lizgarseeyah/Blockchain/tree/gh-pages/img/mine.png)
 
 To send the data, enter the following in Postman:
 - POST http://localhost:3002/transaction/broadcast
@@ -424,4 +424,4 @@ Hitting the refresh button on the /mine endpoint will yield the following result
 
 Now that we have a blockchain, we use the information above to query the block information using the Block Explorer:
 
-![final](https://github.com/lizgarseeyah/Blockchain/blob/gh-pages/img/final.png)
+![final](https://github.com/lizgarseeyah/Blockchain/tree/gh-pages/img/final.png)
